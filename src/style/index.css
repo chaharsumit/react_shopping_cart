@@ -437,3 +437,6 @@ p {
     text-align: center;
   }
 }
+.active-size{
+  background-color: goldenrod;
+}

@@ -20,7 +20,7 @@ function Sidebar(props) {
     <aside className="flex-20 sidebar">
       <div className="flex wrap">
         {uniqueSizes.map(size => (
-          <span className="size" key={size} onClick={handleSize}>
+          <span className={props.size.includes(size) ? "size active-size" : "size"} key={size} onClick={handleSize}>
             {size}
           </span>
         ))}
@@ -30,7 +30,6 @@ function Sidebar(props) {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     size: state.size.size
   };

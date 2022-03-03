@@ -1,23 +1,25 @@
 import React from 'react';
 
 function CartItem(props) {
+  let { product } = props;
+
   return (
     <div className='cart-item'>
       <img
-        src='/static/products/876661122392077_2.jpg'
-        alt=''
+        src={`/static/products/${product.sku}_2.jpg`}
+        alt={product.title}
         width='80'
       />
       <div className='cart-item-details'>
         <p className='cart-item-name'>
-          Sphynx Tie Dye Wine T-Shirt
+          {product.title}
         </p>
-        <p>X | Front tie dye</p>
+        <p>X | {product.style}</p>
         <p>print Quantity: 1</p>
       </div>
       <div className='cart-price'>
-        <p className='cart-cross'>x</p>
-        <p className='price'>$ 19.00</p>
+        <p className='cart-cross' onClick={() => props.deleteItem(product.id)}>x</p>
+        <p className='price'>${product.price}</p>
         <div>
           <Increment />
           <Decrement />
