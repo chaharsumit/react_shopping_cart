@@ -1,7 +1,7 @@
 import React from "react";
 import CartItem from "./CartItem";
 import { connect } from "react-redux";
-import { openCart, closeCart, deleteProductFromCart } from "../store/action";
+import { openCart, closeCart, deleteProductFromCart, incrementProductQuantity, decrementProductQuantity } from "../store/action";
 
 function Cart(props) {
   let { products, isOpen } = props.cart;
@@ -16,6 +16,14 @@ function Cart(props) {
 
   function deleteItem(id){
     props.dispatch(deleteProductFromCart(id));
+  }
+
+  function increaseQuantity(id){
+    props.dispatch(incrementProductQuantity(id));
+  }
+
+  function decreaseQuantity(id){
+    props.dispatch(decrementProductQuantity(id));
   }
 
   if (!isOpen) {
@@ -50,7 +58,7 @@ function Cart(props) {
 
           {
             products.map(product => (
-              <CartItem product={product} key={product.id} deleteItem={deleteItem} />
+              <CartItem product={product} key={product.id} deleteItem={deleteItem} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} />
             ))
           }
 

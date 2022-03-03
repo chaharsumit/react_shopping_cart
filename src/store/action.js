@@ -36,7 +36,8 @@ export function addProductToCart(product, id){
     type: "ADD_TO_CART",
     product: {
       ...product,
-      id: id
+      id: id,
+      quantity: 1,
     }
   }
 }
@@ -44,6 +45,20 @@ export function addProductToCart(product, id){
 export function deleteProductFromCart(id){
   return {
     type: "DELETE_PRODUCT_FROM_CART",
+    payload: id
+  }
+}
+
+export function incrementProductQuantity(id){
+  return {
+    type: "INCREMENT_PRODUCT_QUANTITY_IN_CART",
+    payload: id
+  }
+}
+
+export function decrementProductQuantity(id){
+  return {
+    type: "DECREMENT_PRODUCT_QUANTITY_IN_CART",
     payload: id
   }
 }

@@ -15,21 +15,21 @@ function CartItem(props) {
           {product.title}
         </p>
         <p>X | {product.style}</p>
-        <p>print Quantity: 1</p>
+        <p>print Quantity: {product.quantity}</p>
       </div>
       <div className='cart-price'>
         <p className='cart-cross' onClick={() => props.deleteItem(product.id)}>x</p>
         <p className='price'>${product.price}</p>
         <div>
-          <Increment />
-          <Decrement />
+          <Increment product={product} increaseQuantity={props.increaseQuantity} />
+          <Decrement product={product} decreaseQuantity={props.decreaseQuantity} />
         </div>
       </div>
     </div>
   );
 }
 
-function Increment() {
+function Increment(props) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -37,6 +37,7 @@ function Increment() {
       viewBox='0 0 24 24'
       stroke='currentColor'
       className='plus-icon'
+      onClick={() => props.increaseQuantity(props.product.id)}
     >
       <path
         strokeLinecap='round'
@@ -47,7 +48,7 @@ function Increment() {
     </svg>
   );
 }
-function Decrement() {
+function Decrement(props) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -55,6 +56,7 @@ function Decrement() {
       viewBox='0 0 24 24'
       stroke='currentColor'
       className='plus-icon'
+      onClick={() => props.decreaseQuantity(props.product.id)}
     >
       <path
         strokeLinecap='round'
