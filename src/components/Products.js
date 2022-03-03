@@ -42,7 +42,7 @@ class Products extends React.Component {
         </div>
         <div className="flex wrap">
           {products.map((product) => (
-            <Product {...product} />
+            <Product {...product} key={product.id} />
           ))}
         </div>
       </div>
