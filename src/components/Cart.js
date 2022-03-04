@@ -1,33 +1,39 @@
 import React from "react";
 import CartItem from "./CartItem";
 import { connect } from "react-redux";
-import { openCart, closeCart, deleteProductFromCart, incrementProductQuantity, decrementProductQuantity } from "../store/action";
+import {
+  openCart,
+  closeCart,
+  deleteProductFromCart,
+  incrementProductQuantity,
+  decrementProductQuantity
+} from "../store/action";
 
 function Cart(props) {
   let { products, isOpen } = props.cart;
-  
+
   function close() {
     props.dispatch(closeCart());
   }
-  
+
   function open() {
     props.dispatch(openCart());
   }
 
-  function deleteItem(id){
+  function deleteItem(id) {
     props.dispatch(deleteProductFromCart(id));
   }
 
-  function increaseQuantity(id){
+  function increaseQuantity(id) {
     props.dispatch(incrementProductQuantity(id));
   }
 
-  function decreaseQuantity(id){
+  function decreaseQuantity(id) {
     props.dispatch(decrementProductQuantity(id));
   }
 
   if (!isOpen) {
-    return <ClosedCart open={open} />;
+    return <ClosedCart open={open} products={products} />;
   } else {
     return (
       <aside className="cart">
@@ -51,23 +57,44 @@ function Cart(props) {
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
-              <span className="item-count">4</span>
+              <span className="item-count">{products.length}</span>
             </div>
             <h2>Cart</h2>
           </div>
 
-          {
-            products.map(product => (
-              <CartItem product={product} key={product.id} deleteItem={deleteItem} decreaseQuantity={decreaseQuantity} increaseQuantity={increaseQuantity} />
-            ))
-          }
+          {products.map(product => (
+            <CartItem
+              product={product}
+              key={product.id}
+              deleteItem={deleteItem}
+              decreaseQuantity={decreaseQuantity}
+              increaseQuantity={increaseQuantity}
+            />
+          ))}
 
           <div className="cart-checkout">
             <div>
               <p>SUBTOTAL</p>
-              <p>$ 199.00</p>
+              <p>
+                ${" "}
+                {products.reduce((acc, curr) => {
+                  acc += curr.price * curr.quantity;
+                  return acc;
+                }, 0)}
+              </p>
             </div>
-            <button>CHECKOUT</button>
+            <button
+              onClick={() =>
+                alert(
+                  `subTotal is = ${products.reduce((acc, curr) => {
+                    acc += curr.price * curr.quantity;
+                    return acc;
+                  }, 0)}`
+                )
+              }
+            >
+              CHECKOUT
+            </button>
           </div>
         </div>
       </aside>
@@ -94,7 +121,7 @@ function ClosedCart(props) {
               d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
             />
           </svg>
-          <span className="item-count">4</span>
+          <span className="item-count">{props.products.length}</span>
         </div>
       </span>
     </div>
